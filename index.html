@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Diagnostica una evidencia real de tu curso | SISE</title>
+<title>AA1 · Diagnostica una evidencia real de tu curso | SISE</title>
 
-<!-- Librería para generar PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
@@ -33,7 +32,9 @@
   --danger-bg:#FFF0F0;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 html{
   scroll-behavior:smooth;
@@ -72,15 +73,16 @@ select:focus-visible{
   margin:0 auto;
 }
 
-/* =========================
+/* =========================================
    HERO
-========================= */
+========================================= */
 
 .hero{
   position:relative;
   overflow:hidden;
   padding:38px 34px;
   border-radius:18px;
+  color:#FFFFFF;
   background:
     linear-gradient(
       112deg,
@@ -88,7 +90,6 @@ select:focus-visible{
       #3A2028 58%,
       #711B38 130%
     );
-  color:#FFFFFF;
 }
 
 .hero::after{
@@ -119,31 +120,40 @@ select:focus-visible{
   max-width:900px;
 }
 
-.badge{
+.aa1-row{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+}
+
+.aa1-badge{
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  padding:7px 12px;
-  border:1px solid rgba(255,255,255,.20);
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
+  justify-content:center;
+  min-width:92px;
+  padding:10px 17px;
+  border-radius:8px;
+  background:var(--red);
+  color:#FFFFFF;
+  font-size:30px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.03em;
+  box-shadow:0 8px 20px rgba(255,14,73,.20);
+}
+
+.practice-label{
   color:#FFD2DF;
-  font-size:13px;
+  font-size:14px;
   font-weight:900;
   letter-spacing:1px;
   text-transform:uppercase;
 }
 
-.badge::before{
-  content:"";
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--red);
-}
-
 .hero h1{
-  margin:14px 0 12px;
+  margin:0 0 12px;
   max-width:900px;
   color:#FFFFFF;
   font-size:clamp(42px,6vw,66px);
@@ -181,9 +191,9 @@ select:focus-visible{
   font-weight:800;
 }
 
-/* =========================
+/* =========================================
    INSTRUCCIÓN
-========================= */
+========================================= */
 
 .instruction{
   margin:18px 0;
@@ -204,9 +214,9 @@ select:focus-visible{
   margin:0;
 }
 
-/* =========================
+/* =========================================
    RUTA
-========================= */
+========================================= */
 
 .route-box{
   margin-bottom:18px;
@@ -270,15 +280,15 @@ select:focus-visible{
   grid-template-columns:1fr 1fr 1fr;
   gap:10px;
   margin-top:8px;
-  text-align:center;
   color:#D8D0D3;
+  text-align:center;
   font-size:13px;
   font-weight:700;
 }
 
-/* =========================
+/* =========================================
    PANTALLAS
-========================= */
+========================================= */
 
 .screen{
   display:none;
@@ -361,9 +371,9 @@ select:focus-visible{
   padding:25px;
 }
 
-/* =========================
+/* =========================================
    MATRIZ
-========================= */
+========================================= */
 
 .matrix{
   display:grid;
@@ -443,7 +453,9 @@ select:focus-visible{
   border-color:var(--red);
 }
 
-/* PROGRESO */
+/* =========================================
+   PROGRESO
+========================================= */
 
 .matrix-progress{
   margin-top:20px;
@@ -488,9 +500,9 @@ select:focus-visible{
   line-height:1.5;
 }
 
-/* =========================
+/* =========================================
    SEMÁFORO
-========================= */
+========================================= */
 
 .traffic-intro{
   margin:0 0 20px;
@@ -583,9 +595,9 @@ select:focus-visible{
   line-height:1.5;
 }
 
-/* =========================
+/* =========================================
    SÍNTESIS
-========================= */
+========================================= */
 
 .summary{
   display:grid;
@@ -637,7 +649,9 @@ select:focus-visible{
   line-height:1.5;
 }
 
-/* DESCARGA */
+/* =========================================
+   DESCARGA
+========================================= */
 
 .download-box{
   display:flex;
@@ -695,9 +709,9 @@ select:focus-visible{
   display:block;
 }
 
-/* =========================
+/* =========================================
    BOTONES
-========================= */
+========================================= */
 
 .actions{
   display:flex;
@@ -738,9 +752,9 @@ select:focus-visible{
   background:var(--dark);
 }
 
-/* =========================
+/* =========================================
    RESPONSIVE
-========================= */
+========================================= */
 
 @media(max-width:850px){
 
@@ -763,6 +777,10 @@ select:focus-visible{
 
   .hero{
     padding:27px 21px;
+  }
+
+  .aa1-badge{
+    font-size:25px;
   }
 
   .shell-body{
@@ -790,33 +808,47 @@ select:focus-visible{
 
 <div class="app">
 
-<!-- ======================================
+<!-- =========================================
      HERO
-====================================== -->
+========================================= -->
 
 <section class="hero">
 
   <div class="hero-content">
 
-    <div class="badge">
-      Practicar · 30 min
+    <div class="aa1-row">
+
+      <div class="aa1-badge">
+        AA1
+      </div>
+
+      <div class="practice-label">
+        Practicar · 30 min
+      </div>
+
     </div>
+
 
     <h1>
       Diagnostica una <span>evidencia real</span> de tu curso
     </h1>
 
+
     <p>
-      Trabaja con una evidencia que actualmente utilizas. Analízala tal
-      como funciona hoy, identifica sus fortalezas y brechas, y registra
-      un diagnóstico antes de iniciar cualquier rediseño.
+      Esta actividad corresponde a la <strong>AA1</strong>.
+      Trabaja con una evidencia que actualmente utilizas, analízala tal como
+      funciona hoy e identifica sus fortalezas, brechas y primeras oportunidades
+      de mejora antes de iniciar cualquier rediseño.
     </p>
 
+
     <div class="meta">
+
+      <span>Matriz diagnóstica</span>
       <span>Actividad individual</span>
-      <span>Matriz editable</span>
-      <span>Semáforo diagnóstico</span>
+      <span>30 minutos</span>
       <span>Descarga en PDF</span>
+
     </div>
 
   </div>
@@ -824,52 +856,76 @@ select:focus-visible{
 </section>
 
 
+<!-- =========================================
+     INSTRUCCIÓN
+========================================= -->
+
 <div class="instruction">
 
   <p>
-    <strong>No la rediseñes todavía.</strong>
-    Analízala tal como funciona hoy. En esta actividad el objetivo es
-    comprender primero qué está ocurriendo con tu evaluación actual.
+    <strong>Esta matriz constituye tu evidencia AA1.</strong>
+    No rediseñes todavía la evaluación. Analízala tal como funciona hoy.
+    El objetivo es construir un diagnóstico claro de la evidencia actual
+    antes de tomar decisiones de transformación.
   </p>
 
 </div>
 
 
-<!-- ======================================
+<!-- =========================================
      RUTA
-====================================== -->
+========================================= -->
 
 <div class="route-box">
 
   <div class="route-top">
-    <span>Ruta de trabajo</span>
-    <span id="routeText">Paso 1 de 3</span>
+
+    <span>
+      Ruta de trabajo AA1
+    </span>
+
+    <span id="routeText">
+      Paso 1 de 3
+    </span>
+
   </div>
+
 
   <div class="route">
 
-    <div class="node active" id="node1">1</div>
+    <div class="node active" id="node1">
+      1
+    </div>
+
     <div class="line" id="line1"></div>
 
-    <div class="node" id="node2">2</div>
+    <div class="node" id="node2">
+      2
+    </div>
+
     <div class="line" id="line2"></div>
 
-    <div class="node" id="node3">3</div>
+    <div class="node" id="node3">
+      3
+    </div>
 
   </div>
 
+
   <div class="route-labels">
+
     <span>Analiza</span>
     <span>Clasifica</span>
     <span>Sintetiza</span>
+
   </div>
 
 </div>
 
 
-<!-- ======================================
+<!-- =========================================
      PANTALLA 1
-====================================== -->
+========================================= -->
 
 <section class="screen active">
 
@@ -877,15 +933,17 @@ select:focus-visible{
 
   <div class="shell-head">
 
-    <small>Paso 1 · Analiza</small>
+    <small>
+      AA1 · Paso 1 · Analiza
+    </small>
 
     <h2>
-      Matriz diagnóstica de evaluación actual
+      Matriz diagnóstica de evidencia de aprendizaje actual
     </h2>
 
     <p>
-      Completa los diez campos utilizando una evaluación real que
-      actualmente aplicas en uno de tus cursos.
+      Completa todos los campos de la matriz AA1 utilizando una evidencia
+      real que actualmente aplicas en tu propio curso.
     </p>
 
   </div>
@@ -896,15 +954,26 @@ select:focus-visible{
     <div class="matrix">
 
 
+      <!-- 1 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">1</div>
+          <div class="number">
+            1
+          </div>
 
           <div class="item-title">
-            <h3>Curso</h3>
-            <p>¿Qué curso voy a analizar?</p>
+
+            <h3>
+              Curso
+            </h3>
+
+            <p>
+              ¿Qué curso voy a analizar?
+            </p>
+
           </div>
 
         </div>
@@ -919,15 +988,26 @@ select:focus-visible{
       </div>
 
 
+      <!-- 2 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">2</div>
+          <div class="number">
+            2
+          </div>
 
           <div class="item-title">
-            <h3>Resultado de aprendizaje</h3>
-            <p>¿Qué logro debe demostrar el estudiante?</p>
+
+            <h3>
+              Resultado de aprendizaje
+            </h3>
+
+            <p>
+              ¿Qué logro debe demostrar el estudiante?
+            </p>
+
           </div>
 
         </div>
@@ -941,15 +1021,26 @@ select:focus-visible{
       </div>
 
 
+      <!-- 3 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">3</div>
+          <div class="number">
+            3
+          </div>
 
           <div class="item-title">
-            <h3>Evidencia actual</h3>
-            <p>¿Qué producto, desempeño o actividad se evalúa?</p>
+
+            <h3>
+              Evidencia actual
+            </h3>
+
+            <p>
+              ¿Qué producto, desempeño o actividad se evalúa?
+            </p>
+
           </div>
 
         </div>
@@ -963,20 +1054,34 @@ select:focus-visible{
       </div>
 
 
+      <!-- 4 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">4</div>
+          <div class="number">
+            4
+          </div>
 
           <div class="item-title">
-            <h3>Tipo de evaluación</h3>
-            <p>¿Es diagnóstica, formativa, sumativa o metacognitiva?</p>
+
+            <h3>
+              Tipo de evaluación
+            </h3>
+
+            <p>
+              ¿Es diagnóstica, formativa, sumativa o metacognitiva?
+            </p>
+
           </div>
 
         </div>
 
-        <select id="tipo" onchange="updateProgress()">
+        <select
+          id="tipo"
+          onchange="updateProgress()"
+        >
 
           <option value="">
             Selecciona una opción
@@ -1003,15 +1108,26 @@ select:focus-visible{
       </div>
 
 
+      <!-- 5 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">5</div>
+          <div class="number">
+            5
+          </div>
 
           <div class="item-title">
-            <h3>Criterios actuales</h3>
-            <p>¿Con qué criterios se valora actualmente?</p>
+
+            <h3>
+              Criterios actuales
+            </h3>
+
+            <p>
+              ¿Con qué criterios se valora actualmente?
+            </p>
+
           </div>
 
         </div>
@@ -1025,15 +1141,26 @@ select:focus-visible{
       </div>
 
 
+      <!-- 6 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">6</div>
+          <div class="number">
+            6
+          </div>
 
           <div class="item-title">
-            <h3>Nivel de autenticidad</h3>
-            <p>¿Qué tan cercana es a una situación real o profesional?</p>
+
+            <h3>
+              Nivel de autenticidad
+            </h3>
+
+            <p>
+              ¿Qué tan cercana es a una situación real o profesional?
+            </p>
+
           </div>
 
         </div>
@@ -1072,37 +1199,59 @@ select:focus-visible{
       </div>
 
 
+      <!-- 7 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">7</div>
+          <div class="number">
+            7
+          </div>
 
           <div class="item-title">
-            <h3>Retroalimentación actual</h3>
-            <p>¿Qué información recibe actualmente el estudiante?</p>
+
+            <h3>
+              Retroalimentación actual
+            </h3>
+
+            <p>
+              ¿Qué información recibe actualmente el estudiante?
+            </p>
+
           </div>
 
         </div>
 
         <textarea
           id="retroalimentacion"
-          placeholder="Describe qué información recibe el estudiante..."
+          placeholder="Describe qué información recibe actualmente el estudiante..."
           oninput="updateProgress()"
         ></textarea>
 
       </div>
 
 
+      <!-- 8 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">8</div>
+          <div class="number">
+            8
+          </div>
 
           <div class="item-title">
-            <h3>Necesidades del estudiante</h3>
-            <p>¿Qué dificultades o brechas recurrentes identifico?</p>
+
+            <h3>
+              Necesidades del estudiante
+            </h3>
+
+            <p>
+              ¿Qué dificultades o brechas recurrentes identifico?
+            </p>
+
           </div>
 
         </div>
@@ -1116,44 +1265,66 @@ select:focus-visible{
       </div>
 
 
+      <!-- 9 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">9</div>
+          <div class="number">
+            9
+          </div>
 
           <div class="item-title">
-            <h3>Oportunidad de mejora</h3>
-            <p>¿Qué aspecto debería revisarse prioritariamente?</p>
+
+            <h3>
+              Oportunidad de mejora
+            </h3>
+
+            <p>
+              ¿Qué aspecto debería revisarse prioritariamente?
+            </p>
+
           </div>
 
         </div>
 
         <textarea
           id="oportunidad"
-          placeholder="Identifica una oportunidad prioritaria..."
+          placeholder="Identifica una oportunidad prioritaria de mejora..."
           oninput="updateProgress()"
         ></textarea>
 
       </div>
 
 
+      <!-- 10 -->
+
       <div class="matrix-item">
 
         <div class="item-head">
 
-          <div class="number">10</div>
+          <div class="number">
+            10
+          </div>
 
           <div class="item-title">
-            <h3>Primera decisión</h3>
-            <p>¿Cuál sería el primer aspecto que debería atender?</p>
+
+            <h3>
+              Primera decisión
+            </h3>
+
+            <p>
+              ¿Cuál sería el primer aspecto que debería atender?
+            </p>
+
           </div>
 
         </div>
 
         <textarea
           id="decision"
-          placeholder="Registra tu primera decisión..."
+          placeholder="Registra el primer aspecto que debería atenderse..."
           oninput="updateProgress()"
         ></textarea>
 
@@ -1162,22 +1333,31 @@ select:focus-visible{
     </div>
 
 
+    <!-- PROGRESO -->
+
     <div class="matrix-progress">
 
       <h3>
-        Avance de tu matriz
+        Avance de tu matriz AA1
       </h3>
 
       <div class="meter">
         <span id="meterFill"></span>
       </div>
 
-      <div class="percent" id="percent">
+      <div
+        class="percent"
+        id="percent">
         0%
       </div>
 
-      <p class="progress-message" id="progressMessage">
-        Completa los campos para construir una mirada integral de tu evaluación.
+      <p
+        class="progress-message"
+        id="progressMessage">
+
+        Completa los campos para construir una mirada integral
+        de tu evaluación actual.
+
       </p>
 
     </div>
@@ -1185,7 +1365,9 @@ select:focus-visible{
 
     <div class="actions">
 
-      <button class="btn secondary" disabled>
+      <button
+        class="btn secondary"
+        disabled>
         Anterior
       </button>
 
@@ -1204,9 +1386,9 @@ select:focus-visible{
 </section>
 
 
-<!-- ======================================
+<!-- =========================================
      PANTALLA 2
-====================================== -->
+========================================= -->
 
 <section class="screen">
 
@@ -1214,15 +1396,17 @@ select:focus-visible{
 
   <div class="shell-head">
 
-    <small>Paso 2 · Clasifica</small>
+    <small>
+      AA1 · Paso 2 · Clasifica
+    </small>
 
     <h2>
-      Semáforo de mi evaluación
+      Semáforo de mi evidencia
     </h2>
 
     <p>
-      Revisa tu matriz y clasifica los hallazgos según aquello que
-      conviene reconsiderar, ajustar o mantener.
+      Revisa la matriz que acabas de completar y clasifica tus principales
+      hallazgos según aquello que conviene reconsiderar, ajustar o mantener.
     </p>
 
   </div>
@@ -1231,8 +1415,11 @@ select:focus-visible{
   <div class="shell-body">
 
     <p class="traffic-intro">
-      Una vez terminada la matriz, utiliza el semáforo para reconocer
-      qué elementos aportan al aprendizaje y cuáles necesitan una revisión.
+
+      Una vez terminada la matriz, utiliza el semáforo para distinguir qué
+      elementos aportan al aprendizaje y cuáles necesitan una revisión antes
+      de avanzar hacia el rediseño.
+
     </p>
 
 
@@ -1245,9 +1432,13 @@ select:focus-visible{
 
         <div class="traffic-head">
 
-          <div class="light">!</div>
+          <div class="light">
+            !
+          </div>
 
-          <small>Rojo</small>
+          <small>
+            Rojo
+          </small>
 
           <h3>
             Reemplazar o reconsiderar
@@ -1283,9 +1474,13 @@ select:focus-visible{
 
         <div class="traffic-head">
 
-          <div class="light">!</div>
+          <div class="light">
+            !
+          </div>
 
-          <small>Amarillo</small>
+          <small>
+            Amarillo
+          </small>
 
           <h3>
             Ajustar
@@ -1321,9 +1516,13 @@ select:focus-visible{
 
         <div class="traffic-head">
 
-          <div class="light">✓</div>
+          <div class="light">
+            ✓
+          </div>
 
-          <small>Verde</small>
+          <small>
+            Verde
+          </small>
 
           <h3>
             Mantener o potenciar
@@ -1366,7 +1565,7 @@ select:focus-visible{
       <button
         class="btn"
         onclick="goScreen(2)">
-        Registrar diagnóstico
+        Registrar diagnóstico AA1
       </button>
 
     </div>
@@ -1378,9 +1577,9 @@ select:focus-visible{
 </section>
 
 
-<!-- ======================================
+<!-- =========================================
      PANTALLA 3
-====================================== -->
+========================================= -->
 
 <section class="screen">
 
@@ -1388,15 +1587,17 @@ select:focus-visible{
 
   <div class="shell-head">
 
-    <small>Paso 3 · Sintetiza</small>
+    <small>
+      AA1 · Paso 3 · Sintetiza
+    </small>
 
     <h2>
       Registra tu diagnóstico
     </h2>
 
     <p>
-      Resume tus principales hallazgos. Esta síntesis también se
-      incluirá en el PDF que podrás descargar al finalizar.
+      Resume los principales hallazgos obtenidos. Esta síntesis formará
+      parte del PDF final de tu evidencia AA1.
     </p>
 
   </div>
@@ -1486,13 +1687,12 @@ select:focus-visible{
       <div class="download-text">
 
         <h3>
-          Descarga tu diagnóstico
+          Descarga tu evidencia AA1
         </h3>
 
         <p>
-          El PDF incluirá los diez campos de tu matriz diagnóstica,
-          la clasificación del semáforo y la síntesis final que acabas
-          de elaborar.
+          El PDF incluirá tu matriz diagnóstica, el semáforo de hallazgos
+          y la síntesis final. Guárdalo como evidencia de la AA1.
         </p>
 
       </div>
@@ -1500,7 +1700,7 @@ select:focus-visible{
       <button
         class="download-btn"
         onclick="downloadPDF()">
-        Descargar mi diagnóstico en PDF
+        Descargar AA1 en PDF
       </button>
 
     </div>
@@ -1509,7 +1709,9 @@ select:focus-visible{
     <div
       class="download-status"
       id="downloadStatus">
-      Tu PDF fue generado correctamente.
+
+      Tu evidencia AA1 fue generada correctamente.
+
     </div>
 
 
@@ -1540,13 +1742,14 @@ select:focus-visible{
 
 <script>
 
-/* =====================================================
+/* =========================================
    NAVEGACIÓN
-===================================================== */
+========================================= */
 
 const screens = [
   ...document.querySelectorAll(".screen")
 ];
+
 
 function goScreen(index){
 
@@ -1559,11 +1762,16 @@ function goScreen(index){
 
   });
 
+
   updateRoute(index);
 
+
   if(index === 2){
+
     prepareSummary();
+
   }
+
 
   window.scrollTo({
     top:0,
@@ -1573,9 +1781,9 @@ function goScreen(index){
 }
 
 
-/* =====================================================
+/* =========================================
    RUTA
-===================================================== */
+========================================= */
 
 function updateRoute(index){
 
@@ -1584,23 +1792,36 @@ function updateRoute(index){
 
 
   const nodes = [
+
     document.getElementById("node1"),
     document.getElementById("node2"),
     document.getElementById("node3")
+
   ];
 
+
   const lines = [
+
     document.getElementById("line1"),
     document.getElementById("line2")
+
   ];
 
 
   nodes.forEach(node=>{
-    node.classList.remove("active","done");
+
+    node.classList.remove(
+      "active",
+      "done"
+    );
+
   });
 
+
   lines.forEach(line=>{
+
     line.classList.remove("done");
+
   });
 
 
@@ -1610,6 +1831,7 @@ function updateRoute(index){
 
   }
 
+
   if(index === 1){
 
     nodes[0].classList.add("done");
@@ -1618,6 +1840,7 @@ function updateRoute(index){
     lines[0].classList.add("done");
 
   }
+
 
   if(index === 2){
 
@@ -1633,9 +1856,9 @@ function updateRoute(index){
 }
 
 
-/* =====================================================
+/* =========================================
    PROGRESO
-===================================================== */
+========================================= */
 
 function updateProgress(){
 
@@ -1661,7 +1884,9 @@ function updateProgress(){
   fields.forEach(field=>{
 
     if(field.value.trim() !== ""){
+
       completed++;
+
     }
 
   });
@@ -1688,7 +1913,7 @@ function updateProgress(){
   if(value === 0){
 
     message.textContent =
-      "Completa los campos para construir una mirada integral de tu evaluación.";
+      "Completa los campos para construir una mirada integral de tu evaluación actual.";
 
   }
 
@@ -1709,24 +1934,26 @@ function updateProgress(){
   else{
 
     message.textContent =
-      "Matriz completa. Ahora puedes clasificar tus principales hallazgos.";
+      "Matriz AA1 completa. Ahora puedes clasificar tus principales hallazgos.";
 
   }
 
 }
 
 
-/* =====================================================
+/* =========================================
    SEMÁFORO → SÍNTESIS
-===================================================== */
+========================================= */
 
 function syncSummary(){
 
   document.getElementById("finalGreen").value =
     document.getElementById("greenText").value;
 
+
   document.getElementById("finalYellow").value =
     document.getElementById("yellowText").value;
+
 
   document.getElementById("finalRed").value =
     document.getElementById("redText").value;
@@ -1740,7 +1967,10 @@ function prepareSummary(){
 
 
   if(
-    document.getElementById("finalGap").value.trim() === ""
+    document
+      .getElementById("finalGap")
+      .value
+      .trim() === ""
   ){
 
     document.getElementById("finalGap").value =
@@ -1750,7 +1980,10 @@ function prepareSummary(){
 
 
   if(
-    document.getElementById("finalDecision").value.trim() === ""
+    document
+      .getElementById("finalDecision")
+      .value
+      .trim() === ""
   ){
 
     document.getElementById("finalDecision").value =
@@ -1761,9 +1994,9 @@ function prepareSummary(){
 }
 
 
-/* =====================================================
-   PDF
-===================================================== */
+/* =========================================
+   DESCARGA PDF
+========================================= */
 
 function downloadPDF(){
 
@@ -1777,6 +2010,7 @@ function downloadPDF(){
     );
 
     return;
+
   }
 
 
@@ -1798,10 +2032,13 @@ function downloadPDF(){
   const pageWidth =
     doc.internal.pageSize.getWidth();
 
+
   const pageHeight =
     doc.internal.pageSize.getHeight();
 
+
   const margin = 16;
+
 
   const usableWidth =
     pageWidth - (margin * 2);
@@ -1810,9 +2047,9 @@ function downloadPDF(){
   let y = 18;
 
 
-  /* -----------------------
-     UTILIDADES
-  ----------------------- */
+  /* -------------------------------------
+     CONTROL DE PÁGINAS
+  ------------------------------------- */
 
   function checkPage(heightNeeded){
 
@@ -1832,9 +2069,18 @@ function downloadPDF(){
   }
 
 
+  /* -------------------------------------
+     ENCABEZADO INTERNO
+  ------------------------------------- */
+
   function addSmallHeader(){
 
-    doc.setFillColor(36,31,33);
+    doc.setFillColor(
+      36,
+      31,
+      33
+    );
+
 
     doc.rect(
       0,
@@ -1851,15 +2097,18 @@ function downloadPDF(){
       73
     );
 
+
     doc.setFont(
       "helvetica",
       "bold"
     );
 
+
     doc.setFontSize(9);
 
+
     doc.text(
-      "SISE · Diagnóstico de evaluación",
+      "SISE · AA1 · Matriz diagnóstica",
       margin,
       7.2
     );
@@ -1874,17 +2123,24 @@ function downloadPDF(){
   }
 
 
+  /* -------------------------------------
+     TÍTULO DE SECCIÓN
+  ------------------------------------- */
+
   function writeSectionTitle(text){
 
     checkPage(14);
 
+
     y += 3;
+
 
     doc.setFillColor(
       36,
       31,
       33
     );
+
 
     doc.roundedRect(
       margin,
@@ -1903,12 +2159,15 @@ function downloadPDF(){
       255
     );
 
+
     doc.setFont(
       "helvetica",
       "bold"
     );
 
+
     doc.setFontSize(11);
+
 
     doc.text(
       text,
@@ -1916,7 +2175,9 @@ function downloadPDF(){
       y + 6.5
     );
 
+
     y += 15;
+
 
     doc.setTextColor(
       35,
@@ -1926,6 +2187,10 @@ function downloadPDF(){
 
   }
 
+
+  /* -------------------------------------
+     CAMPO
+  ------------------------------------- */
 
   function writeField(label,value){
 
@@ -1949,7 +2214,9 @@ function downloadPDF(){
       );
 
 
-    checkPage(boxHeight + 5);
+    checkPage(
+      boxHeight + 5
+    );
 
 
     doc.setDrawColor(
@@ -1957,6 +2224,7 @@ function downloadPDF(){
       219,
       221
     );
+
 
     doc.setFillColor(
       250,
@@ -1981,13 +2249,16 @@ function downloadPDF(){
       "bold"
     );
 
+
     doc.setFontSize(10);
+
 
     doc.setTextColor(
       255,
       14,
       73
     );
+
 
     doc.text(
       label,
@@ -2001,7 +2272,9 @@ function downloadPDF(){
       "normal"
     );
 
+
     doc.setFontSize(9.5);
+
 
     doc.setTextColor(
       58,
@@ -2022,9 +2295,9 @@ function downloadPDF(){
   }
 
 
-  /* -----------------------
-     PORTADA
-  ----------------------- */
+  /* =====================================
+     PORTADA PDF
+  ===================================== */
 
   doc.setFillColor(
     36,
@@ -2032,11 +2305,12 @@ function downloadPDF(){
     33
   );
 
+
   doc.rect(
     0,
     0,
     pageWidth,
-    52,
+    61,
     "F"
   );
 
@@ -2047,11 +2321,14 @@ function downloadPDF(){
     73
   );
 
-  doc.rect(
+
+  doc.roundedRect(
     margin,
-    15,
-    32,
-    6,
+    12,
+    34,
+    13,
+    2,
+    2,
     "F"
   );
 
@@ -2062,18 +2339,22 @@ function downloadPDF(){
     255
   );
 
+
   doc.setFont(
     "helvetica",
     "bold"
   );
 
-  doc.setFontSize(18);
+
+  doc.setFontSize(22);
+
 
   doc.text(
-    "DIAGNÓSTICO DE",
-    margin,
-    31
+    "AA1",
+    margin + 5,
+    21
   );
+
 
   doc.setTextColor(
     255,
@@ -2081,12 +2362,31 @@ function downloadPDF(){
     73
   );
 
-  doc.setFontSize(20);
+
+  doc.setFontSize(19);
+
 
   doc.text(
-    "MI EVALUACIÓN ACTUAL",
+    "MATRIZ DIAGNÓSTICA",
     margin,
-    40
+    39
+  );
+
+
+  doc.setTextColor(
+    255,
+    255,
+    255
+  );
+
+
+  doc.setFontSize(13);
+
+
+  doc.text(
+    "DE EVIDENCIA DE APRENDIZAJE ACTUAL",
+    margin,
+    48
   );
 
 
@@ -2096,29 +2396,32 @@ function downloadPDF(){
     85
   );
 
+
   doc.setFont(
     "helvetica",
     "normal"
   );
 
+
   doc.setFontSize(9.5);
 
+
   doc.text(
-    "Matriz diagnóstica · Semáforo · Síntesis",
+    "Diagnóstico · Semáforo · Síntesis",
     margin,
-    61
+    70
   );
 
 
-  y = 72;
+  y = 80;
 
 
-  /* -----------------------
+  /* =====================================
      MATRIZ
-  ----------------------- */
+  ===================================== */
 
   writeSectionTitle(
-    "1. Matriz diagnóstica"
+    "1. Matriz diagnóstica de evidencia de aprendizaje actual"
   );
 
 
@@ -2187,12 +2490,12 @@ function downloadPDF(){
   });
 
 
-  /* -----------------------
+  /* =====================================
      SEMÁFORO
-  ----------------------- */
+  ===================================== */
 
   writeSectionTitle(
-    "2. Semáforo de mi evaluación"
+    "2. Semáforo de mi evidencia"
   );
 
 
@@ -2214,12 +2517,12 @@ function downloadPDF(){
   );
 
 
-  /* -----------------------
+  /* =====================================
      SÍNTESIS
-  ----------------------- */
+  ===================================== */
 
   writeSectionTitle(
-    "3. Síntesis del diagnóstico"
+    "3. Síntesis del diagnóstico AA1"
   );
 
 
@@ -2253,9 +2556,9 @@ function downloadPDF(){
   );
 
 
-  /* -----------------------
+  /* =====================================
      PIE DE PÁGINA
-  ----------------------- */
+  ===================================== */
 
   const totalPages =
     doc.internal.getNumberOfPages();
@@ -2276,6 +2579,7 @@ function downloadPDF(){
       227
     );
 
+
     doc.line(
       margin,
       pageHeight - 12,
@@ -2289,7 +2593,9 @@ function downloadPDF(){
       "normal"
     );
 
+
     doc.setFontSize(8);
+
 
     doc.setTextColor(
       120,
@@ -2299,14 +2605,17 @@ function downloadPDF(){
 
 
     doc.text(
-      "SISE · Diagnóstico de evaluación",
+      "SISE · AA1",
       margin,
       pageHeight - 7
     );
 
 
     doc.text(
-      "Página " + page + " de " + totalPages,
+      "Página " +
+      page +
+      " de " +
+      totalPages,
       pageWidth - margin,
       pageHeight - 7,
       {
@@ -2317,18 +2626,21 @@ function downloadPDF(){
   }
 
 
-  /* -----------------------
+  /* =====================================
      NOMBRE DEL ARCHIVO
-  ----------------------- */
+  ===================================== */
 
   let courseName =
-    document.getElementById("curso").value.trim();
+    document
+      .getElementById("curso")
+      .value
+      .trim();
 
 
   if(!courseName){
 
     courseName =
-      "mi_evaluacion";
+      "mi_curso";
 
   }
 
@@ -2343,7 +2655,7 @@ function downloadPDF(){
 
 
   doc.save(
-    "diagnostico_" +
+    "AA1_matriz_diagnostica_" +
     safeName +
     ".pdf"
   );
@@ -2355,21 +2667,25 @@ function downloadPDF(){
     );
 
 
-  status.classList.add("show");
+  status.classList.add(
+    "show"
+  );
 
 
   setTimeout(()=>{
 
-    status.classList.remove("show");
+    status.classList.remove(
+      "show"
+    );
 
   },5000);
 
 }
 
 
-/* =====================================================
+/* =========================================
    REINICIAR
-===================================================== */
+========================================= */
 
 function restartActivity(){
 
@@ -2387,7 +2703,9 @@ function restartActivity(){
 
       field.selectedIndex = 0;
 
-    }else{
+    }
+
+    else{
 
       field.value = "";
 
