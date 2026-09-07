@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Diagnostica una evidencia real de tu curso | SISE</title>
+
+<!-- Librería para generar PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root{
+  --red:#FF0E49;
+  --red-dark:#D9003E;
+  --dark:#241F21;
+  --dark2:#2D2426;
+  --wine:#6B1E36;
+  --soft:#FFF1F5;
+  --paper:#F7F4F4;
+  --white:#FFFFFF;
+  --text:#171416;
+  --muted:#6E6669;
+  --border:#E6DEE1;
+
+  --green:#147A53;
+  --green-bg:#ECF8F3;
+
+  --yellow:#A36C00;
+  --yellow-bg:#FFF6E5;
+
+  --danger:#BE3434;
+  --danger-bg:#FFF0F0;
+}
+
+*{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  padding:24px;
+  background:var(--paper);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+  outline:3px solid rgba(255,14,73,.22);
+  outline-offset:2px;
+}
+
+.app{
+  width:100%;
+  max-width:1120px;
+  margin:0 auto;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:38px 34px;
+  border-radius:18px;
+  background:
+    linear-gradient(
+      112deg,
+      var(--dark) 0%,
+      #3A2028 58%,
+      #711B38 130%
+    );
+  color:#FFFFFF;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  width:270px;
+  height:270px;
+  right:-70px;
+  top:-105px;
+  border:2px solid rgba(255,255,255,.16);
+  border-radius:50%;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  width:140px;
+  height:14px;
+  right:34px;
+  bottom:32px;
+  background:var(--red);
+  transform:skewX(-28deg);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:900px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 12px;
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  color:#FFD2DF;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.badge::before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--red);
+}
+
+.hero h1{
+  margin:14px 0 12px;
+  max-width:900px;
+  color:#FFFFFF;
+  font-size:clamp(42px,6vw,66px);
+  line-height:.94;
+  font-weight:900;
+  text-transform:uppercase;
+}
+
+.hero h1 span{
+  color:var(--red);
+}
+
+.hero p{
+  max-width:850px;
+  margin:0;
+  color:#F7EBEF;
+  font-size:18px;
+  line-height:1.55;
+}
+
+.meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:18px;
+}
+
+.meta span{
+  padding:7px 11px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:7px;
+  background:rgba(255,255,255,.08);
+  color:#FFFFFF;
+  font-size:13px;
+  font-weight:800;
+}
+
+/* =========================
+   INSTRUCCIÓN
+========================= */
+
+.instruction{
+  margin:18px 0;
+  padding:19px 21px;
+  border:1px solid #F4CBD8;
+  border-left:6px solid var(--red);
+  border-radius:10px;
+  background:var(--soft);
+  color:#453D40;
+  line-height:1.6;
+}
+
+.instruction strong{
+  color:var(--red);
+}
+
+.instruction p{
+  margin:0;
+}
+
+/* =========================
+   RUTA
+========================= */
+
+.route-box{
+  margin-bottom:18px;
+  padding:17px 20px;
+  border-radius:12px;
+  background:var(--dark);
+  color:#FFFFFF;
+}
+
+.route-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+  color:#D8D0D3;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
+
+.route{
+  display:grid;
+  grid-template-columns:auto 1fr auto 1fr auto;
+  gap:10px;
+  align-items:center;
+}
+
+.node{
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  padding:0;
+  border:2px solid var(--red);
+  border-radius:50%;
+  background:var(--dark);
+  color:#FFFFFF;
+  font-weight:900;
+  line-height:1;
+}
+
+.node.active,
+.node.done{
+  background:var(--red);
+}
+
+.line{
+  height:4px;
+  border-radius:999px;
+  background:#655D60;
+}
+
+.line.done{
+  background:var(--red);
+}
+
+.route-labels{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-top:8px;
+  text-align:center;
+  color:#D8D0D3;
+  font-size:13px;
+  font-weight:700;
+}
+
+/* =========================
+   PANTALLAS
+========================= */
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
+  animation:fadeIn .22s ease;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:.3;
+    transform:translateY(5px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.shell{
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#FFFFFF;
+}
+
+.shell-head{
+  position:relative;
+  overflow:hidden;
+  padding:24px 28px;
+  background:var(--dark);
+  color:#FFFFFF;
+}
+
+.shell-head::after{
+  content:"»";
+  position:absolute;
+  right:22px;
+  top:-14px;
+  color:rgba(255,14,73,.22);
+  font-size:105px;
+  font-weight:900;
+  line-height:1;
+}
+
+.shell-head small{
+  position:relative;
+  z-index:2;
+  display:block;
+  margin-bottom:4px;
+  color:#FFA8C1;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+
+.shell-head h2{
+  position:relative;
+  z-index:2;
+  margin:0;
+  color:#FFFFFF;
+  font-size:clamp(30px,4vw,41px);
+  line-height:1;
+}
+
+.shell-head p{
+  position:relative;
+  z-index:2;
+  max-width:830px;
+  margin:8px 0 0;
+  color:#E7DDE0;
+  font-size:15px;
+  line-height:1.55;
+}
+
+.shell-body{
+  padding:25px;
+}
+
+/* =========================
+   MATRIZ
+========================= */
+
+.matrix{
+  display:grid;
+  gap:13px;
+}
+
+.matrix-item{
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#FFFFFF;
+}
+
+.item-head{
+  display:grid;
+  grid-template-columns:38px 1fr;
+  gap:12px;
+  align-items:start;
+  margin-bottom:10px;
+}
+
+.number{
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  min-width:36px;
+  min-height:36px;
+  padding:0;
+  border-radius:50%;
+  background:var(--red);
+  color:#FFFFFF;
+  font-size:14px;
+  font-weight:900;
+  line-height:1;
+}
+
+.item-title h3{
+  margin:0 0 3px;
+  color:var(--dark);
+  font-size:19px;
+}
+
+.item-title p{
+  margin:0;
+  color:var(--muted);
+  font-size:13.5px;
+  line-height:1.45;
+}
+
+.matrix-item input,
+.matrix-item textarea,
+.matrix-item select{
+  width:100%;
+  border:1px solid #D8D0D3;
+  border-radius:8px;
+  background:#FFFFFF;
+  color:#332E30;
+}
+
+.matrix-item input,
+.matrix-item select{
+  min-height:46px;
+  padding:11px 12px;
+}
+
+.matrix-item textarea{
+  min-height:88px;
+  padding:12px;
+  resize:vertical;
+  line-height:1.5;
+}
+
+.matrix-item input:focus,
+.matrix-item textarea:focus,
+.matrix-item select:focus{
+  border-color:var(--red);
+}
+
+/* PROGRESO */
+
+.matrix-progress{
+  margin-top:20px;
+  padding:19px;
+  border-radius:12px;
+  background:var(--dark);
+  color:#FFFFFF;
+}
+
+.matrix-progress h3{
+  margin:0 0 10px;
+  font-size:23px;
+}
+
+.meter{
+  height:11px;
+  overflow:hidden;
+  border-radius:99px;
+  background:#4A4144;
+}
+
+.meter span{
+  display:block;
+  width:0;
+  height:100%;
+  border-radius:99px;
+  background:var(--red);
+  transition:.25s;
+}
+
+.percent{
+  margin-top:8px;
+  color:#FF8CAE;
+  font-size:30px;
+  font-weight:900;
+}
+
+.progress-message{
+  margin:5px 0 0;
+  color:#E5DDE0;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* =========================
+   SEMÁFORO
+========================= */
+
+.traffic-intro{
+  margin:0 0 20px;
+  color:#4D4548;
+  font-size:16px;
+  line-height:1.65;
+}
+
+.traffic-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.traffic-card{
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#FFFFFF;
+}
+
+.traffic-head{
+  padding:18px;
+  color:#FFFFFF;
+}
+
+.traffic-head .light{
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  margin-bottom:9px;
+  border:3px solid rgba(255,255,255,.6);
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+  font-size:20px;
+}
+
+.traffic-card.red .traffic-head{
+  background:#B73B3B;
+}
+
+.traffic-card.yellow .traffic-head{
+  background:#B98311;
+}
+
+.traffic-card.green .traffic-head{
+  background:#167856;
+}
+
+.traffic-head small{
+  display:block;
+  margin-bottom:3px;
+  color:rgba(255,255,255,.82);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.traffic-head h3{
+  margin:0;
+  font-size:21px;
+}
+
+.traffic-body{
+  padding:18px;
+}
+
+.traffic-body strong{
+  display:block;
+  margin-bottom:7px;
+  font-size:15px;
+}
+
+.traffic-body p{
+  margin:0 0 13px;
+  color:#5C5457;
+  font-size:14px;
+  line-height:1.55;
+}
+
+.traffic-body textarea{
+  width:100%;
+  min-height:125px;
+  padding:12px;
+  border:1px solid #D8D0D3;
+  border-radius:8px;
+  resize:vertical;
+  line-height:1.5;
+}
+
+/* =========================
+   SÍNTESIS
+========================= */
+
+.summary{
+  display:grid;
+  gap:13px;
+}
+
+.summary-item{
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#FFFFFF;
+}
+
+.summary-item.green{
+  border-left:6px solid var(--green);
+  background:var(--green-bg);
+}
+
+.summary-item.yellow{
+  border-left:6px solid #D59A1C;
+  background:var(--yellow-bg);
+}
+
+.summary-item.red{
+  border-left:6px solid #D44A4A;
+  background:var(--danger-bg);
+}
+
+.summary-item.dark{
+  border-left:6px solid var(--dark);
+  background:#F5F2F3;
+}
+
+.summary-item label{
+  display:block;
+  margin-bottom:8px;
+  color:var(--dark);
+  font-weight:800;
+}
+
+.summary-item textarea{
+  width:100%;
+  min-height:84px;
+  padding:12px;
+  border:1px solid #D8D0D3;
+  border-radius:8px;
+  background:#FFFFFF;
+  resize:vertical;
+  line-height:1.5;
+}
+
+/* DESCARGA */
+
+.download-box{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  margin-top:20px;
+  padding:22px;
+  border-radius:12px;
+  background:var(--dark);
+  color:#FFFFFF;
+}
+
+.download-text h3{
+  margin:0 0 6px;
+  color:#FFFFFF;
+  font-size:24px;
+}
+
+.download-text p{
+  max-width:700px;
+  margin:0;
+  color:#DED5D8;
+  font-size:14px;
+  line-height:1.55;
+}
+
+.download-btn{
+  flex:0 0 auto;
+  min-height:48px;
+  padding:13px 20px;
+  border:none;
+  border-radius:8px;
+  background:var(--red);
+  color:#FFFFFF;
+  font-weight:900;
+}
+
+.download-btn:hover{
+  background:var(--red-dark);
+}
+
+.download-status{
+  display:none;
+  margin-top:12px;
+  padding:12px 14px;
+  border-left:5px solid var(--green);
+  border-radius:7px;
+  background:var(--green-bg);
+  color:#145D43;
+  font-size:14px;
+}
+
+.download-status.show{
+  display:block;
+}
+
+/* =========================
+   BOTONES
+========================= */
+
+.actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid var(--border);
+}
+
+.btn{
+  min-height:46px;
+  padding:12px 18px;
+  border:none;
+  border-radius:8px;
+  background:var(--red);
+  color:#FFFFFF;
+  font-weight:900;
+}
+
+.btn:hover{
+  background:var(--red-dark);
+}
+
+.btn.secondary{
+  border:1px solid var(--dark);
+  background:#FFFFFF;
+  color:var(--dark);
+}
+
+.btn.secondary:hover{
+  background:var(--dark);
+  color:#FFFFFF;
+}
+
+.btn.dark{
+  background:var(--dark);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:850px){
+
+  body{
+    padding:14px;
+  }
+
+  .traffic-grid{
+    grid-template-columns:1fr;
+  }
+
+  .download-box{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .hero{
+    padding:27px 21px;
+  }
+
+  .shell-body{
+    padding:19px;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .btn,
+  .download-btn{
+    width:100%;
+  }
+
+  .route-labels{
+    font-size:11px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ======================================
+     HERO
+====================================== -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="badge">
+      Practicar · 30 min
+    </div>
+
+    <h1>
+      Diagnostica una <span>evidencia real</span> de tu curso
+    </h1>
+
+    <p>
+      Trabaja con una evidencia que actualmente utilizas. Analízala tal
+      como funciona hoy, identifica sus fortalezas y brechas, y registra
+      un diagnóstico antes de iniciar cualquier rediseño.
+    </p>
+
+    <div class="meta">
+      <span>Actividad individual</span>
+      <span>Matriz editable</span>
+      <span>Semáforo diagnóstico</span>
+      <span>Descarga en PDF</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="instruction">
+
+  <p>
+    <strong>No la rediseñes todavía.</strong>
+    Analízala tal como funciona hoy. En esta actividad el objetivo es
+    comprender primero qué está ocurriendo con tu evaluación actual.
+  </p>
+
+</div>
+
+
+<!-- ======================================
+     RUTA
+====================================== -->
+
+<div class="route-box">
+
+  <div class="route-top">
+    <span>Ruta de trabajo</span>
+    <span id="routeText">Paso 1 de 3</span>
+  </div>
+
+  <div class="route">
+
+    <div class="node active" id="node1">1</div>
+    <div class="line" id="line1"></div>
+
+    <div class="node" id="node2">2</div>
+    <div class="line" id="line2"></div>
+
+    <div class="node" id="node3">3</div>
+
+  </div>
+
+  <div class="route-labels">
+    <span>Analiza</span>
+    <span>Clasifica</span>
+    <span>Sintetiza</span>
+  </div>
+
+</div>
+
+
+<!-- ======================================
+     PANTALLA 1
+====================================== -->
+
+<section class="screen active">
+
+<div class="shell">
+
+  <div class="shell-head">
+
+    <small>Paso 1 · Analiza</small>
+
+    <h2>
+      Matriz diagnóstica de evaluación actual
+    </h2>
+
+    <p>
+      Completa los diez campos utilizando una evaluación real que
+      actualmente aplicas en uno de tus cursos.
+    </p>
+
+  </div>
+
+
+  <div class="shell-body">
+
+    <div class="matrix">
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">1</div>
+
+          <div class="item-title">
+            <h3>Curso</h3>
+            <p>¿Qué curso voy a analizar?</p>
+          </div>
+
+        </div>
+
+        <input
+          id="curso"
+          type="text"
+          placeholder="Escribe el nombre del curso..."
+          oninput="updateProgress()"
+        >
+
+      </div>
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">2</div>
+
+          <div class="item-title">
+            <h3>Resultado de aprendizaje</h3>
+            <p>¿Qué logro debe demostrar el estudiante?</p>
+          </div>
+
+        </div>
+
+        <textarea
+          id="resultado"
+          placeholder="Describe el resultado de aprendizaje..."
+          oninput="updateProgress()"
+        ></textarea>
+
+      </div>
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">3</div>
+
+          <div class="item-title">
+            <h3>Evidencia actual</h3>
+            <p>¿Qué producto, desempeño o actividad se evalúa?</p>
+          </div>
+
+        </div>
+
+        <textarea
+          id="evidencia"
+          placeholder="Describe la evidencia que actualmente utilizas..."
+          oninput="updateProgress()"
+        ></textarea>
+
+      </div>
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">4</div>
+
+          <div class="item-title">
+            <h3>Tipo de evaluación</h3>
+            <p>¿Es diagnóstica, formativa, sumativa o metacognitiva?</p>
+          </div>
+
+        </div>
+
+        <select id="tipo" onchange="updateProgress()">
+
+          <option value="">
+            Selecciona una opción
+          </option>
+
+          <option value="Diagnóstica">
+            Diagnóstica
+          </option>
+
+          <option value="Formativa">
+            Formativa
+          </option>
+
+          <option value="Sumativa">
+            Sumativa
+          </option>
+
+          <option value="Metacognitiva">
+            Metacognitiva
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">5</div>
+
+          <div class="item-title">
+            <h3>Criterios actuales</h3>
+            <p>¿Con qué criterios se valora actualmente?</p>
+          </div>
+
+        </div>
+
+        <textarea
+          id="criterios"
+          placeholder="Registra los criterios que utilizas actualmente..."
+          oninput="updateProgress()"
+        ></textarea>
+
+      </div>
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">6</div>
+
+          <div class="item-title">
+            <h3>Nivel de autenticidad</h3>
+            <p>¿Qué tan cercana es a una situación real o profesional?</p>
+          </div>
+
+        </div>
+
+        <select
+          id="autenticidad"
+          onchange="updateProgress()"
+        >
+
+          <option value="">
+            Selecciona un nivel
+          </option>
+
+          <option value="1 · Muy tradicional">
+            1 · Muy tradicional
+          </option>
+
+          <option value="2 · Principalmente tradicional">
+            2 · Principalmente tradicional
+          </option>
+
+          <option value="3 · Intermedia">
+            3 · Intermedia
+          </option>
+
+          <option value="4 · Principalmente auténtica">
+            4 · Principalmente auténtica
+          </option>
+
+          <option value="5 · Muy auténtica">
+            5 · Muy auténtica
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">7</div>
+
+          <div class="item-title">
+            <h3>Retroalimentación actual</h3>
+            <p>¿Qué información recibe actualmente el estudiante?</p>
+          </div>
+
+        </div>
+
+        <textarea
+          id="retroalimentacion"
+          placeholder="Describe qué información recibe el estudiante..."
+          oninput="updateProgress()"
+        ></textarea>
+
+      </div>
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">8</div>
+
+          <div class="item-title">
+            <h3>Necesidades del estudiante</h3>
+            <p>¿Qué dificultades o brechas recurrentes identifico?</p>
+          </div>
+
+        </div>
+
+        <textarea
+          id="necesidades"
+          placeholder="Describe dificultades o brechas recurrentes..."
+          oninput="updateProgress()"
+        ></textarea>
+
+      </div>
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">9</div>
+
+          <div class="item-title">
+            <h3>Oportunidad de mejora</h3>
+            <p>¿Qué aspecto debería revisarse prioritariamente?</p>
+          </div>
+
+        </div>
+
+        <textarea
+          id="oportunidad"
+          placeholder="Identifica una oportunidad prioritaria..."
+          oninput="updateProgress()"
+        ></textarea>
+
+      </div>
+
+
+      <div class="matrix-item">
+
+        <div class="item-head">
+
+          <div class="number">10</div>
+
+          <div class="item-title">
+            <h3>Primera decisión</h3>
+            <p>¿Cuál sería el primer aspecto que debería atender?</p>
+          </div>
+
+        </div>
+
+        <textarea
+          id="decision"
+          placeholder="Registra tu primera decisión..."
+          oninput="updateProgress()"
+        ></textarea>
+
+      </div>
+
+    </div>
+
+
+    <div class="matrix-progress">
+
+      <h3>
+        Avance de tu matriz
+      </h3>
+
+      <div class="meter">
+        <span id="meterFill"></span>
+      </div>
+
+      <div class="percent" id="percent">
+        0%
+      </div>
+
+      <p class="progress-message" id="progressMessage">
+        Completa los campos para construir una mirada integral de tu evaluación.
+      </p>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button class="btn secondary" disabled>
+        Anterior
+      </button>
+
+      <button
+        class="btn"
+        onclick="goScreen(1)">
+        Continuar al semáforo
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================
+     PANTALLA 2
+====================================== -->
+
+<section class="screen">
+
+<div class="shell">
+
+  <div class="shell-head">
+
+    <small>Paso 2 · Clasifica</small>
+
+    <h2>
+      Semáforo de mi evaluación
+    </h2>
+
+    <p>
+      Revisa tu matriz y clasifica los hallazgos según aquello que
+      conviene reconsiderar, ajustar o mantener.
+    </p>
+
+  </div>
+
+
+  <div class="shell-body">
+
+    <p class="traffic-intro">
+      Una vez terminada la matriz, utiliza el semáforo para reconocer
+      qué elementos aportan al aprendizaje y cuáles necesitan una revisión.
+    </p>
+
+
+    <div class="traffic-grid">
+
+
+      <!-- ROJO -->
+
+      <div class="traffic-card red">
+
+        <div class="traffic-head">
+
+          <div class="light">!</div>
+
+          <small>Rojo</small>
+
+          <h3>
+            Reemplazar o reconsiderar
+          </h3>
+
+        </div>
+
+        <div class="traffic-body">
+
+          <strong>
+            ¿Qué elemento aporta poco para demostrar el desempeño?
+          </strong>
+
+          <p>
+            Identifica aspectos que ya no permiten observar adecuadamente
+            el aprendizaje esperado.
+          </p>
+
+          <textarea
+            id="redText"
+            placeholder="Escribe aquí qué necesitas reconsiderar..."
+            oninput="syncSummary()"
+          ></textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- AMARILLO -->
+
+      <div class="traffic-card yellow">
+
+        <div class="traffic-head">
+
+          <div class="light">!</div>
+
+          <small>Amarillo</small>
+
+          <h3>
+            Ajustar
+          </h3>
+
+        </div>
+
+        <div class="traffic-body">
+
+          <strong>
+            ¿Qué funciona parcialmente y podría fortalecerse?
+          </strong>
+
+          <p>
+            Registra aspectos que aportan, pero todavía requieren
+            modificaciones.
+          </p>
+
+          <textarea
+            id="yellowText"
+            placeholder="Escribe aquí qué necesitas ajustar..."
+            oninput="syncSummary()"
+          ></textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- VERDE -->
+
+      <div class="traffic-card green">
+
+        <div class="traffic-head">
+
+          <div class="light">✓</div>
+
+          <small>Verde</small>
+
+          <h3>
+            Mantener o potenciar
+          </h3>
+
+        </div>
+
+        <div class="traffic-body">
+
+          <strong>
+            ¿Qué funciona y debería conservarse?
+          </strong>
+
+          <p>
+            Reconoce aquello que sí contribuye al aprendizaje y que
+            conviene mantener o fortalecer.
+          </p>
+
+          <textarea
+            id="greenText"
+            placeholder="Escribe aquí qué mantendrías o potenciarías..."
+            oninput="syncSummary()"
+          ></textarea>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn secondary"
+        onclick="goScreen(0)">
+        Anterior
+      </button>
+
+      <button
+        class="btn"
+        onclick="goScreen(2)">
+        Registrar diagnóstico
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================
+     PANTALLA 3
+====================================== -->
+
+<section class="screen">
+
+<div class="shell">
+
+  <div class="shell-head">
+
+    <small>Paso 3 · Sintetiza</small>
+
+    <h2>
+      Registra tu diagnóstico
+    </h2>
+
+    <p>
+      Resume tus principales hallazgos. Esta síntesis también se
+      incluirá en el PDF que podrás descargar al finalizar.
+    </p>
+
+  </div>
+
+
+  <div class="shell-body">
+
+    <div class="summary">
+
+
+      <div class="summary-item green">
+
+        <label for="finalGreen">
+          🟢 Mantendría:
+        </label>
+
+        <textarea
+          id="finalGreen"
+          placeholder="¿Qué funciona y debería conservarse?"
+        ></textarea>
+
+      </div>
+
+
+      <div class="summary-item yellow">
+
+        <label for="finalYellow">
+          🟡 Necesito ajustar:
+        </label>
+
+        <textarea
+          id="finalYellow"
+          placeholder="¿Qué funciona parcialmente y necesita fortalecerse?"
+        ></textarea>
+
+      </div>
+
+
+      <div class="summary-item red">
+
+        <label for="finalRed">
+          🔴 Necesito reconsiderar:
+        </label>
+
+        <textarea
+          id="finalRed"
+          placeholder="¿Qué aporta poco para demostrar el desempeño?"
+        ></textarea>
+
+      </div>
+
+
+      <div class="summary-item dark">
+
+        <label for="finalGap">
+          La principal brecha que encuentro es:
+        </label>
+
+        <textarea
+          id="finalGap"
+          placeholder="Describe la principal brecha identificada..."
+        ></textarea>
+
+      </div>
+
+
+      <div class="summary-item dark">
+
+        <label for="finalDecision">
+          El primer aspecto que debería revisar es:
+        </label>
+
+        <textarea
+          id="finalDecision"
+          placeholder="Define la primera prioridad que debería atenderse..."
+        ></textarea>
+
+      </div>
+
+    </div>
+
+
+    <!-- DESCARGA -->
+
+    <div class="download-box">
+
+      <div class="download-text">
+
+        <h3>
+          Descarga tu diagnóstico
+        </h3>
+
+        <p>
+          El PDF incluirá los diez campos de tu matriz diagnóstica,
+          la clasificación del semáforo y la síntesis final que acabas
+          de elaborar.
+        </p>
+
+      </div>
+
+      <button
+        class="download-btn"
+        onclick="downloadPDF()">
+        Descargar mi diagnóstico en PDF
+      </button>
+
+    </div>
+
+
+    <div
+      class="download-status"
+      id="downloadStatus">
+      Tu PDF fue generado correctamente.
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn secondary"
+        onclick="goScreen(1)">
+        Anterior
+      </button>
+
+      <button
+        class="btn dark"
+        onclick="restartActivity()">
+        Reiniciar actividad
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   NAVEGACIÓN
+===================================================== */
+
+const screens = [
+  ...document.querySelectorAll(".screen")
+];
+
+function goScreen(index){
+
+  screens.forEach((screen,i)=>{
+
+    screen.classList.toggle(
+      "active",
+      i === index
+    );
+
+  });
+
+  updateRoute(index);
+
+  if(index === 2){
+    prepareSummary();
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   RUTA
+===================================================== */
+
+function updateRoute(index){
+
+  document.getElementById("routeText").textContent =
+    "Paso " + (index + 1) + " de 3";
+
+
+  const nodes = [
+    document.getElementById("node1"),
+    document.getElementById("node2"),
+    document.getElementById("node3")
+  ];
+
+  const lines = [
+    document.getElementById("line1"),
+    document.getElementById("line2")
+  ];
+
+
+  nodes.forEach(node=>{
+    node.classList.remove("active","done");
+  });
+
+  lines.forEach(line=>{
+    line.classList.remove("done");
+  });
+
+
+  if(index === 0){
+
+    nodes[0].classList.add("active");
+
+  }
+
+  if(index === 1){
+
+    nodes[0].classList.add("done");
+    nodes[1].classList.add("active");
+
+    lines[0].classList.add("done");
+
+  }
+
+  if(index === 2){
+
+    nodes[0].classList.add("done");
+    nodes[1].classList.add("done");
+    nodes[2].classList.add("active");
+
+    lines[0].classList.add("done");
+    lines[1].classList.add("done");
+
+  }
+
+}
+
+
+/* =====================================================
+   PROGRESO
+===================================================== */
+
+function updateProgress(){
+
+  const fields = [
+
+    document.getElementById("curso"),
+    document.getElementById("resultado"),
+    document.getElementById("evidencia"),
+    document.getElementById("tipo"),
+    document.getElementById("criterios"),
+    document.getElementById("autenticidad"),
+    document.getElementById("retroalimentacion"),
+    document.getElementById("necesidades"),
+    document.getElementById("oportunidad"),
+    document.getElementById("decision")
+
+  ];
+
+
+  let completed = 0;
+
+
+  fields.forEach(field=>{
+
+    if(field.value.trim() !== ""){
+      completed++;
+    }
+
+  });
+
+
+  const value =
+    Math.round(
+      (completed / fields.length) * 100
+    );
+
+
+  document.getElementById("meterFill").style.width =
+    value + "%";
+
+
+  document.getElementById("percent").textContent =
+    value + "%";
+
+
+  const message =
+    document.getElementById("progressMessage");
+
+
+  if(value === 0){
+
+    message.textContent =
+      "Completa los campos para construir una mirada integral de tu evaluación.";
+
+  }
+
+  else if(value < 50){
+
+    message.textContent =
+      "Ya comenzaste. Sigue describiendo cómo funciona actualmente tu evaluación.";
+
+  }
+
+  else if(value < 100){
+
+    message.textContent =
+      "Tu diagnóstico está tomando forma. Revisa qué campos todavía faltan.";
+
+  }
+
+  else{
+
+    message.textContent =
+      "Matriz completa. Ahora puedes clasificar tus principales hallazgos.";
+
+  }
+
+}
+
+
+/* =====================================================
+   SEMÁFORO → SÍNTESIS
+===================================================== */
+
+function syncSummary(){
+
+  document.getElementById("finalGreen").value =
+    document.getElementById("greenText").value;
+
+  document.getElementById("finalYellow").value =
+    document.getElementById("yellowText").value;
+
+  document.getElementById("finalRed").value =
+    document.getElementById("redText").value;
+
+}
+
+
+function prepareSummary(){
+
+  syncSummary();
+
+
+  if(
+    document.getElementById("finalGap").value.trim() === ""
+  ){
+
+    document.getElementById("finalGap").value =
+      document.getElementById("necesidades").value;
+
+  }
+
+
+  if(
+    document.getElementById("finalDecision").value.trim() === ""
+  ){
+
+    document.getElementById("finalDecision").value =
+      document.getElementById("decision").value;
+
+  }
+
+}
+
+
+/* =====================================================
+   PDF
+===================================================== */
+
+function downloadPDF(){
+
+  if(
+    !window.jspdf ||
+    !window.jspdf.jsPDF
+  ){
+
+    alert(
+      "No se pudo cargar el generador de PDF. Revisa tu conexión a internet e inténtalo nuevamente."
+    );
+
+    return;
+  }
+
+
+  prepareSummary();
+
+
+  const { jsPDF } =
+    window.jspdf;
+
+
+  const doc =
+    new jsPDF({
+      orientation:"portrait",
+      unit:"mm",
+      format:"a4"
+    });
+
+
+  const pageWidth =
+    doc.internal.pageSize.getWidth();
+
+  const pageHeight =
+    doc.internal.pageSize.getHeight();
+
+  const margin = 16;
+
+  const usableWidth =
+    pageWidth - (margin * 2);
+
+
+  let y = 18;
+
+
+  /* -----------------------
+     UTILIDADES
+  ----------------------- */
+
+  function checkPage(heightNeeded){
+
+    if(
+      y + heightNeeded >
+      pageHeight - 18
+    ){
+
+      doc.addPage();
+
+      y = 18;
+
+      addSmallHeader();
+
+    }
+
+  }
+
+
+  function addSmallHeader(){
+
+    doc.setFillColor(36,31,33);
+
+    doc.rect(
+      0,
+      0,
+      pageWidth,
+      11,
+      "F"
+    );
+
+
+    doc.setTextColor(
+      255,
+      14,
+      73
+    );
+
+    doc.setFont(
+      "helvetica",
+      "bold"
+    );
+
+    doc.setFontSize(9);
+
+    doc.text(
+      "SISE · Diagnóstico de evaluación",
+      margin,
+      7.2
+    );
+
+
+    doc.setTextColor(
+      35,
+      31,
+      32
+    );
+
+  }
+
+
+  function writeSectionTitle(text){
+
+    checkPage(14);
+
+    y += 3;
+
+    doc.setFillColor(
+      36,
+      31,
+      33
+    );
+
+    doc.roundedRect(
+      margin,
+      y,
+      usableWidth,
+      10,
+      2,
+      2,
+      "F"
+    );
+
+
+    doc.setTextColor(
+      255,
+      255,
+      255
+    );
+
+    doc.setFont(
+      "helvetica",
+      "bold"
+    );
+
+    doc.setFontSize(11);
+
+    doc.text(
+      text,
+      margin + 4,
+      y + 6.5
+    );
+
+    y += 15;
+
+    doc.setTextColor(
+      35,
+      31,
+      32
+    );
+
+  }
+
+
+  function writeField(label,value){
+
+    const cleanValue =
+      value && value.trim()
+      ? value.trim()
+      : "Sin respuesta";
+
+
+    const lines =
+      doc.splitTextToSize(
+        cleanValue,
+        usableWidth - 8
+      );
+
+
+    const boxHeight =
+      Math.max(
+        20,
+        12 + (lines.length * 5)
+      );
+
+
+    checkPage(boxHeight + 5);
+
+
+    doc.setDrawColor(
+      225,
+      219,
+      221
+    );
+
+    doc.setFillColor(
+      250,
+      248,
+      249
+    );
+
+
+    doc.roundedRect(
+      margin,
+      y,
+      usableWidth,
+      boxHeight,
+      2,
+      2,
+      "FD"
+    );
+
+
+    doc.setFont(
+      "helvetica",
+      "bold"
+    );
+
+    doc.setFontSize(10);
+
+    doc.setTextColor(
+      255,
+      14,
+      73
+    );
+
+    doc.text(
+      label,
+      margin + 4,
+      y + 6
+    );
+
+
+    doc.setFont(
+      "helvetica",
+      "normal"
+    );
+
+    doc.setFontSize(9.5);
+
+    doc.setTextColor(
+      58,
+      51,
+      54
+    );
+
+
+    doc.text(
+      lines,
+      margin + 4,
+      y + 12
+    );
+
+
+    y += boxHeight + 4;
+
+  }
+
+
+  /* -----------------------
+     PORTADA
+  ----------------------- */
+
+  doc.setFillColor(
+    36,
+    31,
+    33
+  );
+
+  doc.rect(
+    0,
+    0,
+    pageWidth,
+    52,
+    "F"
+  );
+
+
+  doc.setFillColor(
+    255,
+    14,
+    73
+  );
+
+  doc.rect(
+    margin,
+    15,
+    32,
+    6,
+    "F"
+  );
+
+
+  doc.setTextColor(
+    255,
+    255,
+    255
+  );
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.setFontSize(18);
+
+  doc.text(
+    "DIAGNÓSTICO DE",
+    margin,
+    31
+  );
+
+  doc.setTextColor(
+    255,
+    14,
+    73
+  );
+
+  doc.setFontSize(20);
+
+  doc.text(
+    "MI EVALUACIÓN ACTUAL",
+    margin,
+    40
+  );
+
+
+  doc.setTextColor(
+    90,
+    82,
+    85
+  );
+
+  doc.setFont(
+    "helvetica",
+    "normal"
+  );
+
+  doc.setFontSize(9.5);
+
+  doc.text(
+    "Matriz diagnóstica · Semáforo · Síntesis",
+    margin,
+    61
+  );
+
+
+  y = 72;
+
+
+  /* -----------------------
+     MATRIZ
+  ----------------------- */
+
+  writeSectionTitle(
+    "1. Matriz diagnóstica"
+  );
+
+
+  const matrixData = [
+
+    [
+      "Curso",
+      document.getElementById("curso").value
+    ],
+
+    [
+      "Resultado de aprendizaje",
+      document.getElementById("resultado").value
+    ],
+
+    [
+      "Evidencia actual",
+      document.getElementById("evidencia").value
+    ],
+
+    [
+      "Tipo de evaluación",
+      document.getElementById("tipo").value
+    ],
+
+    [
+      "Criterios actuales",
+      document.getElementById("criterios").value
+    ],
+
+    [
+      "Nivel de autenticidad",
+      document.getElementById("autenticidad").value
+    ],
+
+    [
+      "Retroalimentación actual",
+      document.getElementById("retroalimentacion").value
+    ],
+
+    [
+      "Necesidades del estudiante",
+      document.getElementById("necesidades").value
+    ],
+
+    [
+      "Oportunidad de mejora",
+      document.getElementById("oportunidad").value
+    ],
+
+    [
+      "Primera decisión",
+      document.getElementById("decision").value
+    ]
+
+  ];
+
+
+  matrixData.forEach(item=>{
+
+    writeField(
+      item[0],
+      item[1]
+    );
+
+  });
+
+
+  /* -----------------------
+     SEMÁFORO
+  ----------------------- */
+
+  writeSectionTitle(
+    "2. Semáforo de mi evaluación"
+  );
+
+
+  writeField(
+    "VERDE · Mantener o potenciar",
+    document.getElementById("greenText").value
+  );
+
+
+  writeField(
+    "AMARILLO · Ajustar",
+    document.getElementById("yellowText").value
+  );
+
+
+  writeField(
+    "ROJO · Reemplazar o reconsiderar",
+    document.getElementById("redText").value
+  );
+
+
+  /* -----------------------
+     SÍNTESIS
+  ----------------------- */
+
+  writeSectionTitle(
+    "3. Síntesis del diagnóstico"
+  );
+
+
+  writeField(
+    "Mantendría",
+    document.getElementById("finalGreen").value
+  );
+
+
+  writeField(
+    "Necesito ajustar",
+    document.getElementById("finalYellow").value
+  );
+
+
+  writeField(
+    "Necesito reconsiderar",
+    document.getElementById("finalRed").value
+  );
+
+
+  writeField(
+    "La principal brecha que encuentro es",
+    document.getElementById("finalGap").value
+  );
+
+
+  writeField(
+    "El primer aspecto que debería revisar es",
+    document.getElementById("finalDecision").value
+  );
+
+
+  /* -----------------------
+     PIE DE PÁGINA
+  ----------------------- */
+
+  const totalPages =
+    doc.internal.getNumberOfPages();
+
+
+  for(
+    let page = 1;
+    page <= totalPages;
+    page++
+  ){
+
+    doc.setPage(page);
+
+
+    doc.setDrawColor(
+      230,
+      225,
+      227
+    );
+
+    doc.line(
+      margin,
+      pageHeight - 12,
+      pageWidth - margin,
+      pageHeight - 12
+    );
+
+
+    doc.setFont(
+      "helvetica",
+      "normal"
+    );
+
+    doc.setFontSize(8);
+
+    doc.setTextColor(
+      120,
+      112,
+      115
+    );
+
+
+    doc.text(
+      "SISE · Diagnóstico de evaluación",
+      margin,
+      pageHeight - 7
+    );
+
+
+    doc.text(
+      "Página " + page + " de " + totalPages,
+      pageWidth - margin,
+      pageHeight - 7,
+      {
+        align:"right"
+      }
+    );
+
+  }
+
+
+  /* -----------------------
+     NOMBRE DEL ARCHIVO
+  ----------------------- */
+
+  let courseName =
+    document.getElementById("curso").value.trim();
+
+
+  if(!courseName){
+
+    courseName =
+      "mi_evaluacion";
+
+  }
+
+
+  const safeName =
+    courseName
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g,"")
+      .replace(/[^a-zA-Z0-9]+/g,"_")
+      .replace(/^_+|_+$/g,"")
+      .toLowerCase();
+
+
+  doc.save(
+    "diagnostico_" +
+    safeName +
+    ".pdf"
+  );
+
+
+  const status =
+    document.getElementById(
+      "downloadStatus"
+    );
+
+
+  status.classList.add("show");
+
+
+  setTimeout(()=>{
+
+    status.classList.remove("show");
+
+  },5000);
+
+}
+
+
+/* =====================================================
+   REINICIAR
+===================================================== */
+
+function restartActivity(){
+
+  const fields =
+    document.querySelectorAll(
+      "input, textarea, select"
+    );
+
+
+  fields.forEach(field=>{
+
+    if(
+      field.tagName === "SELECT"
+    ){
+
+      field.selectedIndex = 0;
+
+    }else{
+
+      field.value = "";
+
+    }
+
+  });
+
+
+  document
+    .getElementById("downloadStatus")
+    .classList.remove("show");
+
+
+  updateProgress();
+
+  goScreen(0);
+
+}
+
+</script>
+
+</body>
+</html>
