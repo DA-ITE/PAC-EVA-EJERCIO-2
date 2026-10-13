@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title> Matriz diagnóstica de evidencia de aprendizaje | SISE</title>
+<title>Matriz diagnóstica de evidencia de aprendizaje | SISE</title>
 
 <!-- WORD -->
 <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
@@ -823,7 +823,6 @@ select:focus{
     </p>
 
     <div class="meta">
-      <span>AA1</span>
       <span>⏱ 30 minutos</span>
       <span>Coevaluación</span>
       <span>Descarga Word y PDF</span>
@@ -1483,7 +1482,7 @@ select:focus{
   <div class="progress-top">
 
     <span>
-      Avance del formato AA1
+      Avance del formato
     </span>
 
     <strong id="progressText">
@@ -1505,7 +1504,7 @@ select:focus{
 <div class="download-card">
 
   <h3>
-    Descarga tu evidencia AA1
+    Descarga tu evidencia
   </h3>
 
   <p>
@@ -1886,7 +1885,7 @@ function saveState(){
   try{
 
     localStorage.setItem(
-      "sise-aa1-coevaluacion",
+      "sise-coevaluacion",
       JSON.stringify(state)
     );
 
@@ -1900,7 +1899,7 @@ function loadState(){
 
     const raw =
       localStorage.getItem(
-        "sise-aa1-coevaluacion"
+        "sise-coevaluacion"
       );
 
     if(!raw){
@@ -1964,7 +1963,7 @@ function resetForm(){
 
   const confirmReset =
     confirm(
-      "¿Deseas borrar todas las respuestas registradas en la AA1?"
+      "¿Deseas borrar todas las respuestas registradas?"
     );
 
   if(!confirmReset){
@@ -1994,7 +1993,7 @@ function resetForm(){
   try{
 
     localStorage.removeItem(
-      "sise-aa1-coevaluacion"
+      "sise-coevaluacion"
     );
 
   }catch(error){}
@@ -2663,7 +2662,7 @@ async function downloadWord(){
 
                 new TextRun({
                   text:
-                    "EVIDENCIA DE APRENDIZAJE · CÓDIGO AA1",
+                    "EVIDENCIA DE APRENDIZAJE",
                   bold:true,
                   color:RED,
                   size:22
@@ -2884,7 +2883,7 @@ async function downloadWord(){
       url;
 
     link.download =
-      `AA1_matriz_diagnostica_${fileName()}.docx`;
+      `matriz_diagnostica_${fileName()}.docx`;
 
     document.body.appendChild(link);
 
@@ -3606,7 +3605,7 @@ function downloadPDF(){
   }
 
   pdf.save(
-    `AA1_matriz_diagnostica_${fileName()}.pdf`
+    `matriz_diagnostica_${fileName()}.pdf`
   );
 
   showStatus(
